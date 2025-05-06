@@ -1,19 +1,63 @@
 public class Road {
-    private City source;
-    private City destination;
-    private int distance; // in kilometers
-    private int trafficLevel; // 1 (low traffic) - 10 (heavy traffic)
-    private boolean isBlocked; 
-    private boolean isFlooded;
+    private City from;
+    private City to;
+    private int distance;
+    private boolean underConstruction;
+    private boolean highTraffic;
+    private boolean isBumpy;
 
-    public Road(City source, City destination, int distance) {
-        this.source = source;
-        this.destination = destination;
+    public Road(City from, City to, int distance) {
+        this.from = from;
+        this.to = to;
         this.distance = distance;
-        this.trafficLevel = 1; // default normal traffic
-        this.isBlocked = false;
-        this.isFlooded = false;
+        this.underConstruction = false;
+        this.highTraffic = false;
+        this.isBumpy = false;
     }
 
-    // Getters and setters
+    // Overloaded constructor for advanced settings
+    public Road(City from, City to, int distance, boolean underConstruction, boolean highTraffic, boolean isBumpy) {
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+        this.underConstruction = underConstruction;
+        this.highTraffic = highTraffic;
+        this.isBumpy = isBumpy;
+    }
+
+    public City getFrom() {
+        return from;
+    }
+
+    public City getTo() {
+        return to;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public boolean isUnderConstruction() {
+        return underConstruction;
+    }
+
+    public boolean isHighTraffic() {
+        return highTraffic;
+    }
+
+    public boolean isBumpy() {
+        return isBumpy;
+    }
+
+    public void setUnderConstruction(boolean underConstruction) {
+        this.underConstruction = underConstruction;
+    }
+
+    public void setHighTraffic(boolean highTraffic) {
+        this.highTraffic = highTraffic;
+    }
+
+    public void setBumpy(boolean bumpy) {
+        this.isBumpy = bumpy;
+    }
 }

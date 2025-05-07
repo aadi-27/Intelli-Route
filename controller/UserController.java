@@ -1,6 +1,6 @@
 package controller;
 
-import modal.User;
+import User;
 import service.UserService;
 
 public class UserController {

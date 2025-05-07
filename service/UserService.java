@@ -1,18 +1,18 @@
 package service;
 
-import modal.User;
-
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+
+import model.User;
 
 public class UserService {
 
 
     public static String registerUser(User u)  {
         try{
-            FileOutputStream fs = new FileOutputStream("C:\\Users\\anshu\\OneDrive\\Desktop\\intelliroute\\Intelli-Route\\data\\all_users.txt");
+            FileOutputStream fs = new FileOutputStream("C:/Users/hp/Desktop/Intelli-Route/data/all_users.txt");
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(u);
             os.close();

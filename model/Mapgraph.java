@@ -1,3 +1,5 @@
+package model;
+
 import java.util.*;
 
 public class Mapgraph {
@@ -34,7 +36,6 @@ public class Mapgraph {
                 System.out.println("Skipping " + current.getName() + " due to flood or accident.");
                 continue;
             }
-            
 
             List<Road> roads = adjList.getOrDefault(current, new ArrayList<>());
             for (Road road : roads) {
@@ -70,6 +71,17 @@ public class Mapgraph {
             return path;
         } else {
             return new ArrayList<>(); // No valid route found
+        }
+    }
+
+    // Added method to print the roads
+    public void printRoads() {
+        System.out.println("All Roads in the Map:");
+        for (Map.Entry<City, List<Road>> entry : adjList.entrySet()) {
+            City city = entry.getKey();
+            for (Road road : entry.getValue()) {
+                System.out.println(city.getName() + " --(" + road.getDistance() + ")--> " + road.getTo().getName());
+            }
         }
     }
 }

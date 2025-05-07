@@ -1,5 +1,11 @@
 import java.util.*;
 import java.io.*;
+import model.User;
+import model.City;
+import model.Mapgraph;
+import model.MapLoader;
+import model.Package;
+
 
 public class Intellirouteapp {
 
@@ -7,7 +13,7 @@ public class Intellirouteapp {
         Scanner sc = new Scanner(System.in);
 
         // Step 1: Load data from file
-        Map<String, City> cities = new HashMap<>();
+        Map<String, City> cities = new HashMap<>(); // Corrected line
         Mapgraph map = new Mapgraph();
 
         try {
@@ -29,18 +35,18 @@ public class Intellirouteapp {
 
         // Step 4: Choose Start and End Cities
         System.out.print("Enter source city: ");
-String sourceName = sc.nextLine();
-if (!cities.containsKey(sourceName)) {
-    System.out.println("Source city not found.");
-    return;
-}
+        String sourceName = sc.nextLine();
+        if (!cities.containsKey(sourceName)) {
+            System.out.println("Source city not found.");
+            return;
+        }
 
-System.out.print("Enter destination city: ");
-String destName = sc.nextLine();
-if (!cities.containsKey(destName)) {
-    System.out.println("Destination city not found.");
-    return;
-}
+        System.out.print("Enter destination city: ");
+        String destName = sc.nextLine();
+        if (!cities.containsKey(destName)) {
+            System.out.println("Destination city not found.");
+            return;
+        }
 
 
         City source = cities.get(sourceName);

@@ -1,3 +1,5 @@
+package model;
+
 public class Road {
     private City from;
     private City to;

@@ -1,22 +1,23 @@
 CITIES:
-Delhi
-Jaipur
-Mumbai
 Ahmedabad
-Pune
+Delhi
 Chennai
+Jaipur
+Ambala
+Pune
 Kolkata
+Mumbai
 
 FLOODED:
-Mumbai
 Chennai
+Mumbai
 
 ROADS:
-Delhi,Jaipur,280
-Jaipur,Ahmedabad,650
+Ahmedabad,Jaipur,650
 Ahmedabad,Mumbai,500
-Mumbai,Pune,150
+Delhi,Jaipur,280
 Delhi,Pune,1450
-Jaipur,Mumbai,1200
-Kolkata,Delhi,1500
+Delhi,Kolkata,1500
 Chennai,Mumbai,1330
+Jaipur,Mumbai,1200
+Pune,Mumbai,150

@@ -1,9 +1,11 @@
 package model;
 
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
+import java.io.PrintWriter;
 import java.util.Map;
 
 public class MapLoader {
@@ -20,24 +22,27 @@ public class MapLoader {
             if (line.endsWith(":")) {
                 mode = line.replace(":", "").toUpperCase();
             } else if (mode.equals("CITIES")) {
-                City city = new City(line);
-                cities.put(line, city);
-                //System.out.println("Loaded city: " + line);
+                String cityName = line;
+                if (!cities.containsKey(cityName)) { // Prevent duplicates during load
+                    cities.put(cityName, new City(cityName));
+                }
             } else if (mode.equals("FLOODED")) {
-                City city = cities.get(line);
-                if (city != null) {
-                    city.setFlooded(true);
-                    //System.out.println("City " + line + " is flooded.");
+                String cityName = line;
+                if (cities.containsKey(cityName)) {
+                    cities.get(cityName).setFlooded(true);
                 }
             } else if (mode.equals("ROADS")) {
                 String[] parts = line.split(",");
                 if (parts.length == 3) {
-                    City from = cities.get(parts[0]);
-                    City to = cities.get(parts[1]);
-                    int dist = Integer.parseInt(parts[2].trim()); // Trim whitespace from distance
-                    if (from != null && to != null) {
-                        map.addRoad(from, to, dist);
-                        //System.out.println("Road added: " + parts[0] + " -> " + parts[1] + ", Distance: " + dist);
+                    String fromName = parts[0];
+                    String toName = parts[1];
+                    try {
+                        int dist = Integer.parseInt(parts[2].trim());
+                        if (cities.containsKey(fromName) && cities.containsKey(toName)) {
+                            map.addRoad(cities.get(fromName), cities.get(toName), dist);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error parsing distance: " + parts[2]);
                     }
                 }
             }
@@ -45,27 +50,48 @@ public class MapLoader {
         br.close();
     }
 
-    public static void main(String[] args) {
-        // Example usage:
-        Map<String, City> cities = new HashMap<>();
-        Mapgraph map = new Mapgraph(); // Assuming you have a Mapgraph class
-
-        try {
-            // Replace "src/main/resources/map.txt" with the actual path to your map file
-            loadMap("src/main/resources/map.txt", cities, map);
-
-            // Now you can work with the loaded cities and the map
-            System.out.println("Loaded cities:");
+    public static void saveMap(String filePath, Map<String, City> cities, Mapgraph map) throws IOException {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            // Save cities
+            writer.println("CITIES:");
             for (City city : cities.values()) {
-                System.out.println(city.getName() + (city.isFlooded() ? " (Flooded)" : ""));
+                writer.println(city.getName());
+            }
+            writer.println();
+
+            // Save flooded cities
+            writer.println("FLOODED:");
+            for (City city : cities.values()) {
+                if (city.isFlooded()) {
+                    writer.println(city.getName());
+                }
+            }
+            writer.println();
+
+            // Save roads
+            writer.println("ROADS:");
+            Map<City, Map<City, Integer>> adjacencyList = map.getAdjacencyList();
+            if (adjacencyList != null) {
+                Set<String> savedRoads = new HashSet<>(); // To avoid duplicate entries
+                for (Map.Entry<City, Map<City, Integer>> entry : adjacencyList.entrySet()) {
+                    City fromCity = entry.getKey();
+                    for (Map.Entry<City, Integer> neighborEntry : entry.getValue().entrySet()) {
+                        City toCity = neighborEntry.getKey();
+                        Integer distance = neighborEntry.getValue();
+                        String roadKey1 = fromCity.getName() + "-" + toCity.getName();
+                        String roadKey2 = toCity.getName() + "-" + fromCity.getName();
+
+                        if (!savedRoads.contains(roadKey1) && !savedRoads.contains(roadKey2)) {
+                            writer.println(fromCity.getName() + "," + toCity.getName() + "," + distance);
+                            savedRoads.add(roadKey1);
+                            savedRoads.add(roadKey2);
+                        }
+                    }
+                }
             }
 
-            System.out.println("\nMap Roads:");
-            // Assuming Mapgraph has a method to get all roads or print them
-            map.printRoads(); // Now this will call the printRoads() method in Mapgraph
-
         } catch (IOException e) {
-            System.err.println("Error loading map: " + e.getMessage());
+            System.err.println("Error saving map data: " + e.getMessage());
         }
     }
 }

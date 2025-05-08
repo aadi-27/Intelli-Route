@@ -35,7 +35,7 @@ public class Road {
         return to;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 

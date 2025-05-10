@@ -16,6 +16,7 @@ ROADS:
 Ahmedabad,Jaipur,650
 Ahmedabad,Mumbai,500
 Delhi,Jaipur,280
+Delhi,Ambala,215
 Delhi,Pune,1450
 Delhi,Kolkata,1500
 Chennai,Mumbai,1330

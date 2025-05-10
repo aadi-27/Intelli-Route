@@ -5,7 +5,7 @@
 IntelliRoute is a <ins>**console-based**</ins> application designed to help users find the <ins>**best routes**</ins> between cities. Administrators can efficiently manage the map, while regular users can easily discover optimal travel plans based on their needs.
 
 <p align="center">
-  <img src="truck_icon.png" alt="Delivery Truck Icon" width="100">
+  <img src="logo/Screenshot_2025-05-10_115331-removebg-preview.png" alt="Delivery Truck Icon" width="100">
 </p>
 
 ## <ins>**🌟 Key Features**</ins>
